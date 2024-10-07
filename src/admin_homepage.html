@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdminHomepage</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Concert+One&family=Mitr:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.11/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="output.css">
+    <link rel="stylesheet" href="style_index.css">
+</head>
+<body class="">
+    <div class="navbar bg-base-100">
+        <div class="flex lg:flex-1">
+            <a href="#" class="-m-1.5 p-1.5">
+              <img class="h-8 w-auto" src="img/home.png" alt=""> 
+            </a>
+            <strong><h3 style="margin-left: 10px;margin-top: 5px; font-size: 1rem;" class="fm-f">Khai Thoe</h3></strong>
+        </div>
+        <div class="flex-none gap-2">
+          <div class="form-control">
+            <h3 class="fm-f">Admin : somsree demak</h3>
+          </div>
+          <div class="dropdown dropdown-end">
+            <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+              <div class="w-10 rounded-full">
+                <img alt="Tailwind CSS Navbar component" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+              </div>
+            </div>
+            <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z- mt-3 w-52 p-2 shadow">
+              <li>
+                <a class="justify-between">
+                  Profile
+                  <span class="badge">New</span>
+                </a>
+              </li>
+              <li><a>Settings</a></li>
+              <li><a>Logout</a></li>
+            </ul>
+          </div>
+        </div>
+    </div>
+
+
+  
+    <div class="logo bg-gray-800 border-5 p-10 text-white"> <h1 class="fm-f text-5xl text-center my-10">Welcome to homepage for Admin </h1>
+                        <h3 class="fm-f text-3xl text-center">ยินดีต้อนรับเข้าสู่หน้าแรกของแอดมิน</h3>
+    </div>
+    <div class="container mx-auto">
+        <h2 class="fm-f text-2xl my-10">รายการอสังหาริมทรัพย์ ที่อยู่ในระบบ :</h2>
+        <div class="container grid grid-cols-4 gap-8" id="product">
+            <div class="max-w-md w-full">
+                <div
+                  class="bg-white rounded-2xl shadow-2xl overflow-hidden hover:shadow-3xl">
+                  <div class="relative">
+                    <div class="absolute inset-0 bg-gradient-to-br from-purple-400 to-indigo-600 opacity-75"></div>
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHw0fHxDb3NtaWMlMjBIZWFkcGhvbmVzfGVufDB8MHx8fDE3MjgxNTYwNTR8MA&ixlib=rb-4.0.3&q=80&w=1080" alt="Product Image" class="w-full h-64 object-cover object-center relative z-10">
+                  </div>
+                  <div class="p-6">
+                    <h2 class="text-3xl font-extrabold text-gray-800 mb-2">บ้านฟ้าหลวง</h2>
+                    <p class="text-gray-600 mb-4">เกี่ยวกับบ้าน</p>
+                    <div class="flex items-center justify-between mb-4">
+                        <p>ราคา : </p>   <span class="text-2xl font-bold text-indigo-600"> $9999.99</span>
+                      <div class="flex items-center">
+                        <p>จำนวนห้อง : </p><span class="ml-1 text-gray-600">2 นอน 1 น้ำ</span>
+                      </div>
+                    </div>
+                    <button class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
+                          Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="max-w-md w-full">
+                <div
+                  class="bg-white rounded-2xl shadow-2xl overflow-hidden hover:shadow-3xl">
+                  <div class="relative">
+                    <div class="absolute inset-0 bg-gradient-to-br from-purple-400 to-indigo-600 opacity-75"></div>
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHw0fHxDb3NtaWMlMjBIZWFkcGhvbmVzfGVufDB8MHx8fDE3MjgxNTYwNTR8MA&ixlib=rb-4.0.3&q=80&w=1080" alt="Product Image" class="w-full h-64 object-cover object-center relative z-10">
+                  </div>
+                  <div class="p-6">
+                    <h2 class="text-3xl font-extrabold text-gray-800 mb-2">บ้านฟ้าหลวง</h2>
+                    <p class="text-gray-600 mb-4">เกี่ยวกับบ้าน</p>
+                    <div class="flex items-center justify-between mb-4">
+                        <p>ราคา : </p>   <span class="text-2xl font-bold text-indigo-600"> $9999.99</span>
+                      <div class="flex items-center">
+                        <p>จำนวนห้อง : </p><span class="ml-1 text-gray-600">2 นอน 1 น้ำ</span>
+                      </div>
+                    </div>
+                    <button class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
+                          Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="max-w-md w-full">
+                <div
+                  class="bg-white rounded-2xl shadow-2xl overflow-hidden hover:shadow-3xl">
+                  <div class="relative">
+                    <div class="absolute inset-0 bg-gradient-to-br from-purple-400 to-indigo-600 opacity-75"></div>
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHw0fHxDb3NtaWMlMjBIZWFkcGhvbmVzfGVufDB8MHx8fDE3MjgxNTYwNTR8MA&ixlib=rb-4.0.3&q=80&w=1080" alt="Product Image" class="w-full h-64 object-cover object-center relative z-10">
+                  </div>
+                  <div class="p-6">
+                    <h2 class="text-3xl font-extrabold text-gray-800 mb-2">บ้านฟ้าหลวง</h2>
+                    <p class="text-gray-600 mb-4">เกี่ยวกับบ้าน</p>
+                    <div class="flex items-center justify-between mb-4">
+                        <p>ราคา : </p>   <span class="text-2xl font-bold text-indigo-600"> $9999.99</span>
+                      <div class="flex items-center">
+                        <p>จำนวนห้อง : </p><span class="ml-1 text-gray-600">2 นอน 1 น้ำ</span>
+                      </div>
+                    </div>
+                    <button class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
+                          Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="max-w-md w-full">
+                <div
+                  class="bg-white rounded-2xl shadow-2xl overflow-hidden hover:shadow-3xl">
+                  <div class="relative">
+                    <div class="absolute inset-0 bg-gradient-to-br from-purple-400 to-indigo-600 opacity-75"></div>
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHw0fHxDb3NtaWMlMjBIZWFkcGhvbmVzfGVufDB8MHx8fDE3MjgxNTYwNTR8MA&ixlib=rb-4.0.3&q=80&w=1080" alt="Product Image" class="w-full h-64 object-cover object-center relative z-10">
+                  </div>
+                  <div class="p-6">
+                    <h2 class="text-3xl font-extrabold text-gray-800 mb-2">บ้านฟ้าหลวง</h2>
+                    <p class="text-gray-600 mb-4">เกี่ยวกับบ้าน</p>
+                    <div class="flex items-center justify-between mb-4">
+                        <p>ราคา : </p>   <span class="text-2xl font-bold text-indigo-600"> $9999.99</span>
+                      <div class="flex items-center">
+                        <p>จำนวนห้อง : </p><span class="ml-1 text-gray-600">2 นอน 1 น้ำ</span>
+                      </div>
+                    </div>
+                    <button class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
+                          Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="max-w-md w-full">
+                <div
+                  class="bg-white rounded-2xl shadow-2xl overflow-hidden hover:shadow-3xl">
+                  <div class="relative">
+                    <div class="absolute inset-0 bg-gradient-to-br from-purple-400 to-indigo-600 opacity-75"></div>
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHw0fHxDb3NtaWMlMjBIZWFkcGhvbmVzfGVufDB8MHx8fDE3MjgxNTYwNTR8MA&ixlib=rb-4.0.3&q=80&w=1080" alt="Product Image" class="w-full h-64 object-cover object-center relative z-10">
+                  </div>
+                  <div class="p-6">
+                    <h2 class="text-3xl font-extrabold text-gray-800 mb-2">บ้านฟ้าหลวง</h2>
+                    <p class="text-gray-600 mb-4">เกี่ยวกับบ้าน</p>
+                    <div class="flex items-center justify-between mb-4">
+                        <p>ราคา : </p>   <span class="text-2xl font-bold text-indigo-600"> $9999.99</span>
+                      <div class="flex items-center">
+                        <p>จำนวนห้อง : </p><span class="ml-1 text-gray-600">2 นอน 1 น้ำ</span>
+                      </div>
+                    </div>
+                    <button class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
+                          Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="max-w-md w-full">
+                <div
+                  class="bg-white rounded-2xl shadow-2xl overflow-hidden hover:shadow-3xl">
+                  <div class="relative">
+                    <div class="absolute inset-0 bg-gradient-to-br from-purple-400 to-indigo-600 opacity-75"></div>
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHw0fHxDb3NtaWMlMjBIZWFkcGhvbmVzfGVufDB8MHx8fDE3MjgxNTYwNTR8MA&ixlib=rb-4.0.3&q=80&w=1080" alt="Product Image" class="w-full h-64 object-cover object-center relative z-10">
+                  </div>
+                  <div class="p-6">
+                    <h2 class="text-3xl font-extrabold text-gray-800 mb-2">บ้านฟ้าหลวง</h2>
+                    <p class="text-gray-600 mb-4">เกี่ยวกับบ้าน</p>
+                    <div class="flex items-center justify-between mb-4">
+                        <p>ราคา : </p>   <span class="text-2xl font-bold text-indigo-600"> $9999.99</span>
+                      <div class="flex items-center">
+                        <p>จำนวนห้อง : </p><span class="ml-1 text-gray-600">2 นอน 1 น้ำ</span>
+                      </div>
+                    </div>
+                    <button class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
+                          Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </div>
+              </div>
+        </div>
+    </div>
+       
+
+
+    </div>
+    <button class="btn btn-primary fixed bottom-4 right-4 text-white">
+        เพิ่มรายการอสังหาริมทรัพย์
+    </button>
+</body>
+</html>
