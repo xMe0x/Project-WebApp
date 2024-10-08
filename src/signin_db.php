@@ -23,7 +23,7 @@ if (isset($_POST['signin'])) {
                         if ($row['urole'] == 'admin') {
                             $_SESSION['admin_login'] = $row['id'];
                             $_SESSION['success'] = 'เข้าสู่ระบบสำเร็จ';
-                            header("location: signin.php");
+                            header("location: admin_homepage.php");
                         } else {
                             $_SESSION['user_login'] = $row['id'];
                             $_SESSION['success'] = 'เข้าสู่ระบบสำเร็จ';

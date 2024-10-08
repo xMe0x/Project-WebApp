@@ -32,7 +32,7 @@ if(isset($_POST['signup'])){
                 header("location:index.php");
             } else if (!isset($_SESSION['error'])) {
                 $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-                $stmt = $conn->prepare("INSERT INTO user(firstname, lastname, username, email, password, urole) VALUES(:firstname, :lastname, :username, :email, :password, :urole)");
+                $stmt = $conn->prepare("INSERT INTO users(firstname, lastname, username, email, password, urole) VALUES(:firstname, :lastname, :username, :email, :password, :urole)");
                 $stmt->bindParam(":firstname", $firstname);
                 $stmt->bindParam(":lastname", $lastname);
                 $stmt->bindParam(":username", $username);
