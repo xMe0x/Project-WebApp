@@ -5,8 +5,7 @@ require_once 'config/conn.php';
 $query = $conn->query("SELECT * FROM product_list");
 $rows = $query->rowCount(); 
 
-$query_condo = $conn->query("SELECT * FROM product_list_condo");
-$rows_condo = $query_condo->rowCount(); 
+
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +39,7 @@ $rows_condo = $query_condo->rowCount();
 ?>
     <div class="navbar bg-base-100">
         <div class="flex lg:flex-1">
-            <a href="#" class="-m-1.5 p-1.5">
+            <a href="index.php" class="-m-1.5 p-1.5">
                 <img class="h-8 w-auto" src="img/home.png" alt="Home">
             </a>
             <strong>
@@ -48,6 +47,11 @@ $rows_condo = $query_condo->rowCount();
             </strong>
         </div>
         <div class="flex-none gap-2">
+        <div class=" lg:flex lg:gap-x-12 mx-5">
+            <a href="index.php" class="text-m font-semibold leading-6 text-gray-900">หน้าแรก</a>
+            <a href="all_of_product.php" class="text-m font-semibold leading-6 text-gray-900">รายการทั้งหมด</a>
+            
+        </div>
             <div class="form-control">
                 <h3 class="fm-f">User: <?= htmlspecialchars($row['firstname'] . ' ' . $row['lastname']) ?></h3>
             </div>

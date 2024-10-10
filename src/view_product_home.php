@@ -145,8 +145,8 @@ if (isset($_SESSION['user_login'])) {
             <div class="dropdown">
                 <div tabindex="0" role="button" class="text-m font-semibold leading-6">ประเภท</div>
                 <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box w-52 p-2 shadow">
-                    <li><a>บ้านเดี่ยว</a></li>
-                    <li><a>คอนโด</a></li>
+                    <li><a href="list_home.php">บ้านเดี่ยว</a></li>
+                    <li><a href="list_condo.php">คอนโด</a></li>
                 </ul>
             </div>
         </div>

@@ -4,6 +4,9 @@ require_once 'config/conn.php';
 
 $query = $conn->query("SELECT * FROM product_list");
 $rows = $query->rowCount(); 
+
+$query_condo = $conn->query("SELECT * FROM product_list_condo");
+$rows_condo = $query_condo->rowCount(); 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,7 +45,7 @@ if (isset($_SESSION['user_login'])) {
 ?>
     <div class="navbar bg-base-100">
         <div class="flex lg:flex-1">
-            <a href="#" class="-m-1.5 p-1.5">
+            <a href="index.php" class="-m-1.5 p-1.5">
                 <img class="h-8 w-auto" src="img/home.png" alt="Home">
             </a>
             <strong>
@@ -50,7 +53,7 @@ if (isset($_SESSION['user_login'])) {
             </strong>
         </div>
         <div class="hidden lg:flex lg:gap-x-12">
-            <a href="all_of_product.php" class="text-m font-semibold leading-6 text-gray-900">รายการทั้งหมด</a>
+            <a href="index.php" class="text-m font-semibold leading-6 text-gray-900">หน้าแรก</a>
             <div class="dropdown">
                 <div tabindex="0" role="button" class="text-m font-semibold leading-6">ประเภท</div>
                 <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box w-52 p-2 shadow z-50">
@@ -62,7 +65,7 @@ if (isset($_SESSION['user_login'])) {
                 <div tabindex="0" role="button" class="text-m font-semibold leading-6"></div>
                 <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box w-52 p-2 shadow z-50">
                     <li><a href="list_home.php">บ้านเดี่ยว</a></li>
-                    <li><a href="list_condo.php">คอนโด</a></li>
+                    <li><a>คอนโด</a></li>
                 </ul>
             </div>
         </div>
@@ -134,7 +137,7 @@ if (isset($_SESSION['user_login'])) {
             </strong>
         </div>
         <div class="hidden lg:flex lg:gap-x-12">
-            <a href="all_of_product.php" class="text-m font-semibold leading-6 text-gray-900">รายการทั้งหมด</a>
+            <a href="index.php" class="text-m font-semibold leading-6 text-gray-900">หน้าแรก</a>
             <div class="dropdown">
                 <div tabindex="0" role="button" class="text-m font-semibold leading-6">ประเภท</div>
                 <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box w-52 p-2 shadow z-50">
@@ -305,70 +308,15 @@ if (isset($_SESSION['user_login'])) {
         <!-- ข้อความไม่เบลอ -->
         <div class="relative z-10">
           <h2 class="text-3xl font-bold tracking-tight text-black sm:text-7xl fm-f">Khai Thoe ขายเถอะ</h2>
-          <p class="mt-4 text-lg leading-8 text-black sm:text-2xl fm-f ">เว็บขายบ้านที่ เด็ก COMSCI แนะนำเป็นอันดับ 1</p>
-          <form action="search_db.php" method="post">
-          <div class="mt-6 mx-auto max-w-md gap-x-4">
-            <input id="text_serch" name="text_serch" type="text" required class="min-w-0 rounded-md border-0  px-3 py-3  shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" placeholder="ค้นหาสถานที่ อำเภอ,เขต" style="width: 350px;">
-            <button type="submit" name="search" class="flex-none rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">ค้นหา</button>
-          </div>
-          </form>
+          <p class="mt-4 text-lg leading-8 text-black sm:text-3xl fm-f ">เว็บขายบ้านที่ เด็ก COMSCI แนะนำเป็นอันดับ 1</p>
+          <p class="mt-4 text-lg leading-8 text-black sm:text-2xl fm-f ">ชอบหลังไหนเลือกได้เลย !</p>
         </div>
       </div>
   </div>
+ 
   <div class="content2 mx-auto my-10">
     <div class="container-fluid">
-      <p class="text-5xl text-center fm-f font-semibold">ทำเลแนะนำ</p>
-      <div class="container mx-auto my-20 ">
-      <div class="grid grid-cols-3 content-center gap-x-0 w-full">
-        <div class="max-w-sm rounded overflow-hidden shadow-lg">
-          <img class="w-full" src="img/panakorn.jpg" alt="Sunset in the mountains">
-          <div class="px-6 py-4">
-            <div class="font-bold text-xl mb-2">พระนคร Phra Nakhon</div>
-            <p class="text-gray-700 text-base">
-            เขตพระนครมีความน่าอยู่เพราะเป็นพื้นที่ที่มีประวัติศาสตร์อันยาวนาน วัฒนธรรมที่หลากหลาย และมีสถานที่ท่องเที่ยวที่น่าสนใจ รวมถึงการเดินทางที่สะดวกสบาย ซึ่งเหมาะสำหรับทั้งชาวไทยและชาวต่างชาติที่ต้องการสัมผัสความเป็นไทยในกรุงเทพมหานคร
-            </p>
-          </div>
-          <div class="px-6 pt-4 pb-2">
-            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#ประวัติศาสตร์</span>
-            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#ความหลากหลาย</span>
-            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#เดินทางสะดวก</span>
-          </div>
-        </div>
-        <div class="max-w-sm rounded overflow-hidden shadow-lg">
-          <img class="w-full" src="img/huykwang.jpg" alt="Sunset in the mountains">
-          <div class="px-6 py-4">
-            <div class="font-bold text-xl mb-2">ห้วยขวาง Huai Khwang</div>
-            <p class="text-gray-700 text-base">
-            ห้วยขวางมีความน่าอยู่สูงเพราะมีการคมนาคมที่สะดวกสบาย การค้าและเศรษฐกิจที่เติบโต มีการศึกษาและบริการสาธารณะที่ดี รวมถึงสถานที่ท่องเที่ยวและกิจกรรมที่หลากหลาย ทำให้เขตนี้เป็นที่นิยมของผู้ที่ต้องการอยู่อาศัยในกรุงเทพฯ
-            </p>
-          </div>
-          <div class="px-6 pt-4 pb-2">
-            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#เศรษฐกิจ</span>
-            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#การศึกษา</span>
-            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#ความหลากหลาย</span>
-          </div>
-        </div>
-        <div class="max-w-sm rounded overflow-hidden shadow-lg">
-          <img class="w-full" src="img/phayathai.jpg" alt="Sunset in the mountains">
-          <div class="px-6 py-4">
-            <div class="font-bold text-xl mb-2">พญาไท Phaya Thai</div>
-            <p class="text-gray-700 text-base">
-            เขตพญาไทมีความน่าอยู่สูงเนื่องจากการเดินทางที่สะดวก ระบบการศึกษาและบริการสาธารณะที่ดี รวมถึงกิจกรรมและสถานที่ท่องเที่ยวที่หลากหลาย ทำให้เหมาะสำหรับการอยู่อาศัยและทำงานในกรุงเทพมหานคร
-            </p>
-          </div>
-          <div class="px-6 pt-4 pb-2">
-            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#ท่องเที่ยว</span>
-            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#การบริการ</span>
-            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#เดินทางสะดวก</span>
-          </div>
-        </div>
-    </div>
-    </div>
-  </div>
-  </div>
-  <div class="content2 mx-auto my-10">
-    <div class="container-fluid">
-        <p class="text-5xl text-center fm-f font-semibold">เข้าชมสูงสุด</p>
+        <p class="text-5xl text-center fm-f font-semibold">บ้านเดี่ยว</p>
         <div class="container mx-auto my-20">
             <div class="grid grid-cols-3 gap-6"> 
                 <?php
@@ -405,6 +353,59 @@ if (isset($_SESSION['user_login'])) {
                         echo '                <div class="flex items-center mx-9">';
                         echo '                    <p>ทีอยู่ : </p>';
                         echo '                    <span class="ml-1 text-gray-600">' . htmlspecialchars($product['address']) .'</span>';
+                        echo '                </div>';
+                        echo '            </div>';
+                        echo '        </div>';
+                        echo '    </div>';
+                        echo '</div>';
+                    }
+                } else {
+                    echo "<p>ไม่มีรายการอสังหาริมทรัพย์</p>";
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content2 mx-auto my-10">
+    <div class="container-fluid">
+        <p class="text-5xl text-center fm-f font-semibold">บ้านเดี่ยว</p>
+        <div class="container mx-auto my-20">
+            <div class="grid grid-cols-3 gap-6"> 
+                <?php
+                  if ($rows_condo > 0) {
+                    while ($product_condo = $query_condo->fetch(PDO::FETCH_ASSOC)) {
+                      
+                        echo '<div class="max-w-md w-full">'; 
+                        echo '    <div class="bg-white rounded-2xl shadow-2xl overflow-hidden hover:shadow-3xl transition-transform transform hover:scale-105">'; 
+                        echo '<a href="view_product_home.php?id_product=' . $product_condo["id_product"] . '">';
+                        echo '     <div class="relative group">';
+                        echo '        <img src="img/'.$product_condo['product_image'].'" class="object-cover w-full h-48 group-hover: transition duration-300 ease-in-out">'; 
+                        echo '<div class="absolute top-4 right-4 bg-gray-100 text-xs font-bold px-3 py-2 rounded-full z-20 fm-f transform rotate-12">'.htmlspecialchars($product_condo['status_product']).'</div>';
+                        echo '        <div class="hover:bg-gray-600 group-hover:translate-y-0 pb-10 transform transition duration-300 ease-in-out absolute inset-0 bg-gradient-to-br to-indigo-600 opacity-75 flex items-center justify-center">';
+                        echo '            <span class="text-white text-lg font-bold opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out">กดเพื่อดู</span>';
+                        echo '        </div>';
+                        echo '    </div>';
+                        echo '      </a>';
+                        echo '        <div class="p-6 h-56">';
+                        echo '            <h2 class="text-3xl font-extrabold text-gray-800 mb-2">' . htmlspecialchars($product_condo['product_name']) . '</h2>';
+                        echo '            <p class="text-gray-600 mb-4">' . htmlspecialchars($product_condo['Detail']) . '</p>';
+                        echo '            <div class="flex items-center justify-between mb-4">';
+                        echo '                <p>ราคา : </p>';
+                        echo '                <span class="text-2xl font-bold text-indigo-600">' . htmlspecialchars($product_condo['price']) . '</span>';
+                        echo '                <div class="flex items-center">';
+                        echo '                    <p>จำนวนห้อง : </p>';
+                        echo '                    <span class="ml-1 text-gray-600">' . htmlspecialchars($product_condo['bedroom']) . ' นอน ' . htmlspecialchars($product_condo['bathroom']) . ' น้ำ</span>';
+                        echo '                </div>';
+                        echo '            </div>';
+                        echo '            <div class="grid grid-cols-2 gap-2">';
+                        echo '                <div class="flex items-center">';
+                        echo '                    <p> จังหวัด : </p>';
+                        echo '                        <span class="ml-1 text-gray-600">' . htmlspecialchars($product_condo['city']) .'</span>';
+                        echo '                </div>';
+                        echo '                <div class="flex items-center mx-9">';
+                        echo '                    <p>ทีอยู่ : </p>';
+                        echo '                    <span class="ml-1 text-gray-600">' . htmlspecialchars($product_condo['address']) .'</span>';
                         echo '                </div>';
                         echo '            </div>';
                         echo '        </div>';

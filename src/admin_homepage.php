@@ -169,7 +169,7 @@ $rows_condo = $query_condo->rowCount(); // ใช้ rowCount() แทน mysqli
   <?php
   if ($rows_condo > 0) {
     while ($product_condo = $query_condo->fetch(PDO::FETCH_ASSOC)) {
-      // Create card to display property details
+
       echo '<div class="max-w-md w-full">';
       echo '    <div class="bg-white rounded-2xl shadow-2xl overflow-hidden hover:shadow-3xl">';
       echo '<a href="view_product_condo.php?id_product=' . $product_condo["id_product"] . '">';
@@ -181,7 +181,7 @@ $rows_condo = $query_condo->rowCount(); // ใช้ rowCount() แทน mysqli
       echo '        </div>';
       echo '    </div>';
       echo '      </a>';
-      echo '        <div class="p-6 h-60">'; // Fixed height for card content
+      echo '        <div class="p-6 h-60">'; 
       echo '            <h2 class="text-3xl font-extrabold text-gray-800 mb-2">' . htmlspecialchars($product_condo['product_name']) . '</h2>';
       echo '            <p class="text-gray-600 mb-4">' . htmlspecialchars($product_condo['Detail']) . '</p>';
       echo '            <div class="flex items-center justify-between mb-4">';
