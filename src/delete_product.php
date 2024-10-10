@@ -3,9 +3,8 @@ session_start();
 require_once 'config/conn.php';
 
 if (isset($_POST['delete'])) {
-    // รับค่า product_id จากฟอร์ม
     $id_product = $_POST['id_product'];
-    $type = $type['type'];
+    $type = isset($_POST['type']) ? $_POST['type'] : 'บ้านเดี่ยว'; 
 
     if($type == "คอนโด"){
         $stmt = $conn->prepare("DELETE FROM product_list_condo WHERE id_product = :id_product");
