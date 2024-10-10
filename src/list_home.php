@@ -1,29 +1,12 @@
 <?php
-    session_start();
-    if(!isset($_GET['id_product'])){
-        header("location:admin_homepage.php");
-        exit(); //ยุดการทำงานทันทีหลังจากการเปลี่ยนเส้นทาง
-    }
+session_start();
+require_once 'config/conn.php';
 
-    // รับค่า id_product จาก URL
-    $id_product = $_GET['id_product'];
+$query = $conn->query("SELECT * FROM product_list");
+$rows = $query->rowCount(); 
 
-    require_once 'config/conn.php';
-
-    // ดึงข้อมูลตาม id_product ที่ส่งเข้ามา
-    $query = $conn->prepare("SELECT * FROM product_list_condo WHERE id_product = :id_product");
-    $query->bindParam(':id_product', $id_product, PDO::PARAM_INT);
-    $query->execute();
-
-    // ตรวจสอบว่ามีผลลัพธ์
-    if ($query->rowCount() > 0) {
-        $product = $query->fetch(PDO::FETCH_ASSOC);
-    } else {
-        echo "ไม่พบรายการอสังหาริมทรัพย์ที่มี id_product = " . htmlspecialchars($id_product);
-        exit();
-    }
-
-    
+$query_condo = $conn->query("SELECT * FROM product_list_condo");
+$rows_condo = $query_condo->rowCount(); 
 ?>
 
 <!DOCTYPE html>
@@ -31,12 +14,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo htmlspecialchars($product['product_name']); ?></title>
-    <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Viewproduct</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+    <title>List_home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Concert+One&family=Mitr:wght@200;300;400;500;600;700&display=swap"
@@ -50,12 +29,7 @@
   <link rel="stylesheet" href="style_index.css">
 </head>
 <body>
-
-<?php
-
-
-
-if (isset($_SESSION['user_login'])) {
+<?php if(isset($_SESSION['user_login'])) {
     $user_id = $_SESSION['user_login'];
 
 
@@ -66,7 +40,7 @@ if (isset($_SESSION['user_login'])) {
 ?>
     <div class="navbar bg-base-100">
         <div class="flex lg:flex-1">
-            <a href="index.php" class="-m-1.5 p-1.5">
+            <a href="#" class="-m-1.5 p-1.5">
                 <img class="h-8 w-auto" src="img/home.png" alt="Home">
             </a>
             <strong>
@@ -90,7 +64,7 @@ if (isset($_SESSION['user_login'])) {
         </div>
     </div>
 <?php
-} elseif (isset($_SESSION['admin_login'])) {
+}elseif (isset($_SESSION['admin_login'])) {
     $admin_id = $_SESSION['admin_login'];
 
    
@@ -141,14 +115,9 @@ if (isset($_SESSION['user_login'])) {
             </strong>
         </div>
         <div class="hidden lg:flex lg:gap-x-12">
-            <a href="#" class="text-m font-semibold leading-6 text-gray-900">รายการทั้งหมด</a>
-            <div class="dropdown">
-                <div tabindex="0" role="button" class="text-m font-semibold leading-6">ประเภท</div>
-                <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box w-52 p-2 shadow">
-                    <li><a>บ้านเดี่ยว</a></li>
-                    <li><a>คอนโด</a></li>
-                </ul>
-            </div>
+            <a href="index.php" class="text-m font-semibold leading-6 text-gray-900">หน้าแรก</a>
+            <a href="index.php" class="text-m font-semibold leading-6 text-gray-900">รายการทั้งหมด</a>
+            
         </div>
         <button class="btn btn-success mx-5" onclick="my_modal_3.showModal()">เข้าสู่ระบบ</button>
         <dialog id="my_modal_3" class="modal">
@@ -179,44 +148,59 @@ if (isset($_SESSION['user_login'])) {
 <?php
 }
 ?>
-
-
-    <div class="container mx-auto my-20 ">
-       
-    <div class="grid grid-cols-4 grid-rows-3 grid-flow-col gap-5 mx-auto">   
-         <div class="col-start-1 col-span-2 row-start-1 row-span-2  ">
-         <img src="img/<?php echo $product['product_image']; ?>" class="object-cover rounded-2xl  w-full h-full transition duration-300 ease-in-out">
-    </div>    
-  
-    
-    <div class="col-start-3 row-start-1 col-span-2 row-span-2 mx-auto text-wrap ">
-
-    <h1 class="text-[4rem]  fm-f my-5">คอนโด : <?php echo htmlspecialchars($product['product_name']); ?></h1>
-    <p class="text-[1rem] fm-f my-5 text-blue-300 "> <?php echo htmlspecialchars($product['Detail']); ?></p>
-    <p></p><p class="text-[2rem]  fm-f my-5">ราคา : <?php echo htmlspecialchars($product['price']); ?> บาท</p>
-    
-    <p class="text-[1rem] fm-f my-5">ราคา : <?php echo htmlspecialchars($product['price']); ?> บาท</p>
-    <p class="text-[1rem] fm-f my-5">จำนวนห้องนอน : <?php echo htmlspecialchars($product['bedroom']); ?> ห้อง</p>
-    <p class="text-[1rem] fm-f my-5">จำนวนห้องน้ำ : <?php echo htmlspecialchars($product['bathroom']); ?> ห้อง</p>
-    <p class="text-[1rem] fm-f my-5">เมือง : <?php echo htmlspecialchars($product['city']); ?></p>
-    <p class="text-[1rem] fm-f my-5">ที่อยู่ : <?php echo htmlspecialchars($product['address']); ?></p>
-    <p class="text-[1rem] fm-f my-5">สถานะสินค้า : <?php echo htmlspecialchars($product['status_product']); ?></p>
+<div class="content2 mx-auto my-10">
+    <div class="container-fluid">
+        <p class="text-5xl text-center fm-f font-semibold">รายการบ้านเดี่ยวในระบบทั้งหมด</p>
+        <div class="container mx-auto my-20">
+            <div class="grid grid-cols-3 gap-6"> 
+                <?php
+                if ($rows > 0) {
+                    while ($product = $query->fetch(PDO::FETCH_ASSOC)) {
+                      
+                        echo '<div class="max-w-md w-full">'; 
+                        echo '    <div class="bg-white rounded-2xl shadow-2xl overflow-hidden hover:shadow-3xl transition-transform transform hover:scale-105">'; 
+                        echo '<a href="view_product_home.php?id_product=' . $product["id_product"] . '">';
+                        echo '     <div class="relative group">';
+                        echo '        <img src="img/'.$product['product_image'].'" class="object-cover w-full h-48 group-hover: transition duration-300 ease-in-out">'; 
+                        echo '<div class="absolute top-4 right-4 bg-gray-100 text-xs font-bold px-3 py-2 rounded-full z-20 fm-f transform rotate-12">'.htmlspecialchars($product['status_product']).'</div>';
+                        echo '        <div class="hover:bg-gray-600 group-hover:translate-y-0 pb-10 transform transition duration-300 ease-in-out absolute inset-0 bg-gradient-to-br to-indigo-600 opacity-75 flex items-center justify-center">';
+                        echo '            <span class="text-white text-lg font-bold opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out">กดเพื่อดู</span>';
+                        echo '        </div>';
+                        echo '    </div>';
+                        echo '      </a>';
+                        echo '        <div class="p-6 h-56">';
+                        echo '            <h2 class="text-3xl font-extrabold text-gray-800 mb-2">' . htmlspecialchars($product['product_name']) . '</h2>';
+                        echo '            <p class="text-gray-600 mb-4">' . htmlspecialchars($product['Detail']) . '</p>';
+                        echo '            <div class="flex items-center justify-between mb-4">';
+                        echo '                <p>ราคา : </p>';
+                        echo '                <span class="text-2xl font-bold text-indigo-600">' . htmlspecialchars($product['price']) . '</span>';
+                        echo '                <div class="flex items-center">';
+                        echo '                    <p>จำนวนห้อง : </p>';
+                        echo '                    <span class="ml-1 text-gray-600">' . htmlspecialchars($product['bedroom']) . ' นอน ' . htmlspecialchars($product['bathroom']) . ' น้ำ</span>';
+                        echo '                </div>';
+                        echo '            </div>';
+                        echo '            <div class="grid grid-cols-2 gap-2">';
+                        echo '                <div class="flex items-center">';
+                        echo '                    <p> จังหวัด : </p>';
+                        echo '                        <span class="ml-1 text-gray-600">' . htmlspecialchars($product['city']) .'</span>';
+                        echo '                </div>';
+                        echo '                <div class="flex items-center mx-9">';
+                        echo '                    <p>ทีอยู่ : </p>';
+                        echo '                    <span class="ml-1 text-gray-600">' . htmlspecialchars($product['address']) .'</span>';
+                        echo '                </div>';
+                        echo '            </div>';
+                        echo '        </div>';
+                        echo '    </div>';
+                        echo '</div>';
+                    }
+                } else {
+                    echo "<p>ไม่มีรายการอสังหาริมทรัพย์</p>";
+                }
+                ?>
+            </div>
+        </div>
     </div>
-    <?php
-    if(isset($_SESSION['admin_login'])) {
-    echo '<button class="btn  btn-neutral col-start-3 col-span-2 row-start-3 my-5 text-[1rem]"> ติดต่อซื้อสินค้า </button>';
-    }else if(isset( $_SESSION['user_login'])) {
-      echo '<button class="btn  btn-neutral col-start-3 col-span-2 row-start-3 my-5 text-[1rem]" onclick="contactadmin.showModal()> ติดต่อซื้อสินค้า </button>';
-    }else{
-      echo '<button class="btn  btn-neutral col-start-3 col-span-2 row-start-3 my-5 text-[1rem]" onclick="login.showModal()"> ติดต่อซื้อสินค้า </button>';
-    }
-    ?>
-   </div> 
 </div>
-
-
-  
-
 <div class="footer">
   <footer class="footer footer-center bg-neutral text-primary-content p-10">
     <aside>
@@ -267,40 +251,5 @@ if (isset($_SESSION['user_login'])) {
     </nav>
   </footer>
 </div>
-   
-<dialog id="contactadmin" class="modal">
-  <div class="modal-box">
-    <h3 class="text-lg font-bold">Hello!</h3>
-    <p class="py-4">Press ESC key or click outside to close</p>
-  </div>
-  <form method="dialog" class="modal-backdrop">
-    <button>close</button>
-  </form>
-</dialog>
-
-<dialog id="login" class="modal">
-            <div class="modal-box">
-                <h3 class="font-bold text-center text-3xl fm-f">เข้าสู่ระบบ</h3>
-                <form method="dialog">
-                    <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-                </form>
-                <form class="bg-white px-8 pt-6 pb-8 mb-4" method="post" action="signin_db.php">
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="username">Username</label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" name="username" type="text" placeholder="Username" required>
-                    </div>
-                    <div class="mb-6">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Password</label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" name="password" type="password" placeholder="******************" required>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" name="signin">เข้าสู่ระบบ</button>
-                    </div>
-                </form>
-
-                   <a href="index.php"> <button class="inline-block font-bold text-sm text-blue-500 hover:text-blue-800" >คุณยังไม่มีบัญชี</button></a>
-         
-            </div>
-        </dialog>
 </body>
 </html>

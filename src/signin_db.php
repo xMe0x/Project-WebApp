@@ -27,7 +27,7 @@ if (isset($_POST['signin'])) {
                         } else {
                             $_SESSION['user_login'] = $row['id'];
                             $_SESSION['success'] = 'เข้าสู่ระบบสำเร็จ';
-                            header("location: signin.php");
+                            header("location: index.php");
                         }
                     } else {
                         $_SESSION['error'] = 'รหัสผ่านผิด';

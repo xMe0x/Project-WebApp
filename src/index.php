@@ -1,6 +1,9 @@
 <?php
 session_start();
 require_once 'config/conn.php';
+
+$query = $conn->query("SELECT * FROM product_list");
+$rows = $query->rowCount(); 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,82 +26,146 @@ require_once 'config/conn.php';
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
 </head>
 <body>
+
+<?php
+
+
+
+if (isset($_SESSION['user_login'])) {
+    $user_id = $_SESSION['user_login'];
+
+
+    $stmt = $conn->prepare("SELECT * FROM users WHERE id = :user_id");
+    $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+?>
+    <div class="navbar bg-base-100">
+        <div class="flex lg:flex-1">
+            <a href="#" class="-m-1.5 p-1.5">
+                <img class="h-8 w-auto" src="img/home.png" alt="Home">
+            </a>
+            <strong>
+                <h3 style="margin-left: 10px; margin-top: 5px; font-size: 1rem;" class="fm-f">Khai Thoe</h3>
+            </strong>
+        </div>
+        <div class="hidden lg:flex lg:gap-x-12">
+            <a href="#" class="text-m font-semibold leading-6 text-gray-900">รายการทั้งหมด</a>
+            <div class="dropdown">
+                <div tabindex="0" role="button" class="text-m font-semibold leading-6"></div>
+                <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box w-52 p-2 shadow z-50">
+                    <li><a href="list_home.php">บ้านเดี่ยว</a></li>
+                    <li><a>คอนโด</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="flex-none gap-2">
+            <div class="form-control">
+                <h3 class="fm-f">User: <?= htmlspecialchars($row['firstname'] . ' ' . $row['lastname']) ?></h3>
+            </div>
+            <div class="dropdown dropdown-end">
+                <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+                    <div class="w-10 rounded-full">
+                        <img alt="User Avatar" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                    </div>
+                </div>
+                <ul tabindex="0" class="z-50 menu menu-sm dropdown-content bg-base-100 rounded-box mt-3 w-52 p-2 shadow">
+                    <li><a href="logout.php">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+<?php
+} elseif (isset($_SESSION['admin_login'])) {
+    $admin_id = $_SESSION['admin_login'];
+
+   
+    $stmt = $conn->prepare("SELECT * FROM users WHERE id = :admin_id");
+    $stmt->bindParam(':admin_id', $admin_id, PDO::PARAM_INT);
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+?>
+
+    <div class="navbar bg-base-100">
+        <div class="flex lg:flex-1">
+            <a href="index.php" class="-m-1.5 p-1.5">
+                <img class="h-8 w-auto" src="img/home.png" alt="Home">
+            </a>
+            <strong>
+                <h3 style="margin-left: 10px; margin-top: 5px; font-size: 1rem;" class="fm-f">Khai Thoe</h3>
+            </strong>
+        </div>
+        <div class="flex-none gap-2">
+        <a href="admin_homepage.php" class="text-m font-semibold leading-6 text-gray-900 mx-10">จัดการรายการอสังหาริมทรัพย์</a>
+            <div class="form-control">
+              
+                <h3 class="fm-f">Admin: <?= htmlspecialchars($row['firstname'] . ' ' . $row['lastname']) ?></h3>
+            </div>
+            <div class="dropdown dropdown-end">
+                <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+                    <div class="w-10 rounded-full">
+                        <img alt="Admin Avatar" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                    </div>
+                </div>
+                <ul tabindex="0" class="z-50 menu menu-sm dropdown-content bg-base-100 rounded-box mt-3 w-52 p-2 shadow">
+                    <li><a href="logout.php">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+<?php
+} else {
+?>
+
     <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div class="flex lg:flex-1">
-          <a href="#" class="-m-1.5 p-1.5">
-            <img class="h-8 w-auto" src="img/home.png" alt=""> 
-          </a>
-          <strong><h3 style="margin-left: 10px;margin-top: 5px; font-size: 1rem;"class="fm-f"> Khai Thoe</h3></strong>
-         
+            <a href="#" class="-m-1.5 p-1.5">
+                <img class="h-8 w-auto" src="img/home.png" alt="Home"> 
+            </a>
+            <strong>
+                <h3 style="margin-left: 10px; margin-top: 5px; font-size: 1rem;" class="fm-f">Khai Thoe</h3>
+            </strong>
         </div>
-        <div class="flex lg:hidden">
-          <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
-            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-            </svg>
-          </button>
-        </div>
-        <div class="hidden lg:flex lg:gap-x-12"> 
-          <a href="#" class=" d text-m font-semibold leading-6 text-gray-900 h">รายการทั้งหมด</a>
-          <div class="dropdown">
-        
-            <div tabindex="0" role="button" class="d text-m font-semibold leading-6">ประเภท</div>
-            <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-              <li><a>บ้านเดี่ยว</a></li>
-              <li><a>คอนโด</a></li>
-            </ul>
-          </div>
-          
-          </div>    
-        </div>
-        <?php
-        if (isset($_SESSION['success'])) {
-            echo "<script>alert('".$_SESSION['success']."');</script>";
-            unset($_SESSION['success']);
-        }
-        if (isset($_SESSION['error'])) {
-            echo "<script>alert('".$_SESSION['error']."');</script>";
-            unset($_SESSION['error']);
-        }
-        ?>
-
-
-       <button class="btn btn-success mx-5 " onclick="my_modal_3.showModal()">เข้าสู่ระบบ</button>
-        <dialog id="my_modal_3" class="modal">
-          <div class="modal-box">
-            <h3 class="font-bold text-center text-3xl fm-f">เข้าสู่ระบบ</h3>
-            <form method="dialog">
-              <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-            </form>
-            <form class="bg-white px-8 pt-6 pb-8 mb-4" method="post" action="signin_db.php">
-              <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
-                  Username
-                </label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" name="username" type="text" placeholder="Username" required>
-              </div>
-              <div class="mb-6">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
-                  Password
-                </label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" name="password" type="password" placeholder="******************" required>
-              </div>
-              <div class="flex items-center justify-between">
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" name="signin">
-                 เข้าสู่ระบบ
-                </button>
-               
-            
-              </div>
-              </form>
-              
-              <form method="dialog">
-              <button class=" inline-block  font-bold text-sm text-blue-500 hover:text-blue-800 " onclick="my_modal_2.showModal()">คุณยังไม่มีบัญชี</button>
-            </form>
+        <div class="hidden lg:flex lg:gap-x-12">
+            <a href="#" class="text-m font-semibold leading-6 text-gray-900">รายการทั้งหมด</a>
+            <div class="dropdown">
+                <div tabindex="0" role="button" class="text-m font-semibold leading-6">ประเภท</div>
+                <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box w-52 p-2 shadow z-50">
+                    <li><a href="list_home.php">บ้านเดี่ยว</a></li>
+                    <li><a>คอนโด</a></li>
+                </ul>
             </div>
-          </div>
+        </div>
+        <button class="btn btn-success mx-5" onclick="my_modal_3.showModal()">เข้าสู่ระบบ</button>
+        <dialog id="my_modal_3" class="modal">
+            <div class="modal-box">
+                <h3 class="font-bold text-center text-3xl fm-f">เข้าสู่ระบบ</h3>
+                <form method="dialog">
+                    <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                </form>
+                <form class="bg-white px-8 pt-6 pb-8 mb-4" method="post" action="signin_db.php">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="username">Username</label>
+                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" name="username" type="text" placeholder="Username" required>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Password</label>
+                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" name="password" type="password" placeholder="******************" required>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" name="signin">เข้าสู่ระบบ</button>
+                    </div>
+                </form>
+                <form method="dialog">
+                    <button class="inline-block font-bold text-sm text-blue-500 hover:text-blue-800" onclick="my_modal_2.showModal()">คุณยังไม่มีบัญชี</button>
+                </form>
+            </div>
         </dialog>
-      </nav>
+    </nav>
+<?php
+}
+?>
+    
       <dialog id="my_modal_2" class="modal">
         <div class="modal-box">
           <form method="dialog">
@@ -232,11 +299,12 @@ require_once 'config/conn.php';
         <div class="relative z-10">
           <h2 class="text-3xl font-bold tracking-tight text-black sm:text-7xl fm-f">Khai Thoe ขายเถอะ</h2>
           <p class="mt-4 text-lg leading-8 text-black sm:text-2xl fm-f ">เว็บขายบ้านที่ เด็ก COMSCI แนะนำเป็นอันดับ 1</p>
-          
+          <form action="search_db.php" method="post">
           <div class="mt-6 mx-auto max-w-md gap-x-4">
-            <input id="address" name="text" type="text" required class="min-w-0 rounded-md border-0  px-3 py-3 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" placeholder="ค้นหาสถานที่ อำเภอ,เขต" style="width: 350px;">
-            <button type="submit" class="flex-none rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">ค้นหา</button>
+            <input id="text_serch" name="text_serch" type="text" required class="min-w-0 rounded-md border-0  px-3 py-3  shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" placeholder="ค้นหาสถานที่ อำเภอ,เขต" style="width: 350px;">
+            <button type="submit" name="search" class="flex-none rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">ค้นหา</button>
           </div>
+          </form>
         </div>
       </div>
   </div>
@@ -250,13 +318,13 @@ require_once 'config/conn.php';
           <div class="px-6 py-4">
             <div class="font-bold text-xl mb-2">พระนคร Phra Nakhon</div>
             <p class="text-gray-700 text-base">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
+            เขตพระนครมีความน่าอยู่เพราะเป็นพื้นที่ที่มีประวัติศาสตร์อันยาวนาน วัฒนธรรมที่หลากหลาย และมีสถานที่ท่องเที่ยวที่น่าสนใจ รวมถึงการเดินทางที่สะดวกสบาย ซึ่งเหมาะสำหรับทั้งชาวไทยและชาวต่างชาติที่ต้องการสัมผัสความเป็นไทยในกรุงเทพมหานคร
             </p>
           </div>
           <div class="px-6 pt-4 pb-2">
-            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#photography</span>
-            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#travel</span>
-            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#winter</span>
+            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#ประวัติศาสตร์</span>
+            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#ความหลากหลาย</span>
+            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#เดินทางสะดวก</span>
           </div>
         </div>
         <div class="max-w-sm rounded overflow-hidden shadow-lg">
@@ -264,13 +332,13 @@ require_once 'config/conn.php';
           <div class="px-6 py-4">
             <div class="font-bold text-xl mb-2">ห้วยขวาง Huai Khwang</div>
             <p class="text-gray-700 text-base">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
+            ห้วยขวางมีความน่าอยู่สูงเพราะมีการคมนาคมที่สะดวกสบาย การค้าและเศรษฐกิจที่เติบโต มีการศึกษาและบริการสาธารณะที่ดี รวมถึงสถานที่ท่องเที่ยวและกิจกรรมที่หลากหลาย ทำให้เขตนี้เป็นที่นิยมของผู้ที่ต้องการอยู่อาศัยในกรุงเทพฯ
             </p>
           </div>
           <div class="px-6 pt-4 pb-2">
-            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#photography</span>
-            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#travel</span>
-            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#winter</span>
+            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#เศรษฐกิจ</span>
+            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#การศึกษา</span>
+            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#ความหลากหลาย</span>
           </div>
         </div>
         <div class="max-w-sm rounded overflow-hidden shadow-lg">
@@ -278,13 +346,13 @@ require_once 'config/conn.php';
           <div class="px-6 py-4">
             <div class="font-bold text-xl mb-2">พญาไท Phaya Thai</div>
             <p class="text-gray-700 text-base">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
+            เขตพญาไทมีความน่าอยู่สูงเนื่องจากการเดินทางที่สะดวก ระบบการศึกษาและบริการสาธารณะที่ดี รวมถึงกิจกรรมและสถานที่ท่องเที่ยวที่หลากหลาย ทำให้เหมาะสำหรับการอยู่อาศัยและทำงานในกรุงเทพมหานคร
             </p>
           </div>
           <div class="px-6 pt-4 pb-2">
-            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#photography</span>
-            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#travel</span>
-            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#winter</span>
+            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#ท่องเที่ยว</span>
+            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#การบริการ</span>
+            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#เดินทางสะดวก</span>
           </div>
         </div>
     </div>
@@ -293,54 +361,56 @@ require_once 'config/conn.php';
   </div>
   <div class="content2 mx-auto my-10">
     <div class="container-fluid">
-      <p class="text-5xl text-center fm-f font-semibold">เข้าชมสูงสุด</p>
-      <div class="container mx-auto my-20 ">
-      <div class="grid grid-cols-3 content-center gap-x-0 w-full">
-        <div class="card bg-base-100 w-96 shadow-xl">
-          <figure>
-            <img
-              src="img/homerecom.jpg"
-              alt="Shoes" >
-          </figure>
-          <div class="card-body">
-            <h2 class="card-title">Shoes!</h2>
-            <p>If a dog chews shoes whose shoes does he choose?</p>
-            <div class="card-actions justify-end">
-              <button class="btn btn-primary">Buy Now</button>
+        <p class="text-5xl text-center fm-f font-semibold">เข้าชมสูงสุด</p>
+        <div class="container mx-auto my-20">
+            <div class="grid grid-cols-3 gap-6"> 
+                <?php
+                if ($rows > 0) {
+                    while ($product = $query->fetch(PDO::FETCH_ASSOC)) {
+                      
+                        echo '<div class="max-w-md w-full">'; 
+                        echo '    <div class="bg-white rounded-2xl shadow-2xl overflow-hidden hover:shadow-3xl transition-transform transform hover:scale-105">'; 
+                        echo '<a href="view_product_home.php?id_product=' . $product["id_product"] . '">';
+                        echo '     <div class="relative group">';
+                        echo '        <img src="img/'.$product['product_image'].'" class="object-cover w-full h-48 group-hover: transition duration-300 ease-in-out">'; 
+                        echo '<div class="absolute top-4 right-4 bg-gray-100 text-xs font-bold px-3 py-2 rounded-full z-20 fm-f transform rotate-12">'.htmlspecialchars($product['status_product']).'</div>';
+                        echo '        <div class="hover:bg-gray-600 group-hover:translate-y-0 pb-10 transform transition duration-300 ease-in-out absolute inset-0 bg-gradient-to-br to-indigo-600 opacity-75 flex items-center justify-center">';
+                        echo '            <span class="text-white text-lg font-bold opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out">กดเพื่อดู</span>';
+                        echo '        </div>';
+                        echo '    </div>';
+                        echo '      </a>';
+                        echo '        <div class="p-6 h-56">';
+                        echo '            <h2 class="text-3xl font-extrabold text-gray-800 mb-2">' . htmlspecialchars($product['product_name']) . '</h2>';
+                        echo '            <p class="text-gray-600 mb-4">' . htmlspecialchars($product['Detail']) . '</p>';
+                        echo '            <div class="flex items-center justify-between mb-4">';
+                        echo '                <p>ราคา : </p>';
+                        echo '                <span class="text-2xl font-bold text-indigo-600">' . htmlspecialchars($product['price']) . '</span>';
+                        echo '                <div class="flex items-center">';
+                        echo '                    <p>จำนวนห้อง : </p>';
+                        echo '                    <span class="ml-1 text-gray-600">' . htmlspecialchars($product['bedroom']) . ' นอน ' . htmlspecialchars($product['bathroom']) . ' น้ำ</span>';
+                        echo '                </div>';
+                        echo '            </div>';
+                        echo '            <div class="grid grid-cols-2 gap-2">';
+                        echo '                <div class="flex items-center">';
+                        echo '                    <p> จังหวัด : </p>';
+                        echo '                        <span class="ml-1 text-gray-600">' . htmlspecialchars($product['city']) .'</span>';
+                        echo '                </div>';
+                        echo '                <div class="flex items-center mx-9">';
+                        echo '                    <p>ทีอยู่ : </p>';
+                        echo '                    <span class="ml-1 text-gray-600">' . htmlspecialchars($product['address']) .'</span>';
+                        echo '                </div>';
+                        echo '            </div>';
+                        echo '        </div>';
+                        echo '    </div>';
+                        echo '</div>';
+                    }
+                } else {
+                    echo "<p>ไม่มีรายการอสังหาริมทรัพย์</p>";
+                }
+                ?>
             </div>
-          </div>
-        </div>
-        <div class="card bg-base-100 w-96 shadow-xl">
-          <figure>
-            <img
-              src="img/homerecom2.jpg"
-              alt="Shoes" >
-          </figure>
-          <div class="card-body">
-            <h2 class="card-title">Shoes!</h2>
-            <p>If a dog chews shoes whose shoes does he choose?</p>
-            <div class="card-actions justify-end">
-              <button class="btn btn-primary">Buy Now</button>
-            </div>
-          </div>
-        </div>
-        <div class="card bg-base-100 w-96 shadow-xl">
-          <figure>
-            <img
-              src="img/S__425148445_0-800x600.jpg"
-              alt="Shoes" >
-          </figure>
-          <div class="card-body">
-            <h2 class="card-title">Shoes!</h2>
-            <p>If a dog chews shoes whose shoes does he choose?</p>
-            <div class="card-actions justify-end">
-              <button class="btn btn-primary">Buy Now</button>
-            </div>
-          </div>
         </div>
     </div>
-    </div>
-  </div>
 </div>
 <div class="footer">
   <footer class="footer footer-center bg-neutral text-primary-content p-10">

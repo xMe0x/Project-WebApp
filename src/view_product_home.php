@@ -1,5 +1,5 @@
 <?php
-
+    session_start();
     if(!isset($_GET['id_product'])){
         header("location:admin_homepage.php");
         exit(); //ยุดการทำงานทันทีหลังจากการเปลี่ยนเส้นทาง
@@ -50,44 +50,137 @@
   <link rel="stylesheet" href="style_index.css">
 </head>
 <body>
+
 <?php
-  if (isset($_SESSION['admin_login'])) {
-    $admin_id = $_SESSION['admin_login'];
-    $stmt = $conn->query("SELECT * FROM users WHERE id = $admin_id");
+
+
+
+if (isset($_SESSION['user_login'])) {
+    $user_id = $_SESSION['user_login'];
+
+
+    $stmt = $conn->prepare("SELECT * FROM users WHERE id = :user_id");
+    $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+    $stmt->execute();
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
-  }
-  ?>
-
-<nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
+?>
+    <div class="navbar bg-base-100">
         <div class="flex lg:flex-1">
-          <a href="#" class="-m-1.5 p-1.5">
-            <img class="h-8 w-auto" src="img/home.png" alt=""> 
-          </a>
-          <strong><h3 style="margin-left: 10px;margin-top: 5px; font-size: 1rem;"class="fm-f"> Khai Thoe</h3></strong>
-         
+            <a href="index.php" class="-m-1.5 p-1.5">
+                <img class="h-8 w-auto" src="img/home.png" alt="Home">
+            </a>
+            <strong>
+                <h3 style="margin-left: 10px; margin-top: 5px; font-size: 1rem;" class="fm-f">Khai Thoe</h3>
+            </strong>
         </div>
-        <div class="flex lg:hidden">
-          <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
-            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-            </svg>
-          </button>
+        <div class="flex-none gap-2">
+            <div class="form-control">
+                <h3 class="fm-f">User: <?= htmlspecialchars($row['firstname'] . ' ' . $row['lastname']) ?></h3>
+            </div>
+            <div class="dropdown dropdown-end">
+                <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+                    <div class="w-10 rounded-full">
+                        <img alt="User Avatar" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                    </div>
+                </div>
+                <ul tabindex="0" class="z-50 menu menu-sm dropdown-content bg-base-100 rounded-box mt-3 w-52 p-2 shadow">
+                    <li><a href="logout.php">Logout</a></li>
+                </ul>
+            </div>
         </div>
-        <div class="hidden lg:flex lg:gap-x-12"> 
-          <a href="#" class=" d text-m font-semibold leading-6 text-gray-900 h">รายการทั้งหมด</a>
-          <div class="dropdown">
-        
-            <div tabindex="0" role="button" class="d text-m font-semibold leading-6">ประเภท</div>
-            <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-              <li><a>บ้านเดี่ยว</a></li>
-              <li><a>คอนโด</a></li>
-            </ul>
-          </div>
-          
-          </div>    
-        </div>
+    </div>
+<?php
+} elseif (isset($_SESSION['admin_login'])) {
+    $admin_id = $_SESSION['admin_login'];
 
-      </nav>
+   
+    $stmt = $conn->prepare("SELECT * FROM users WHERE id = :admin_id");
+    $stmt->bindParam(':admin_id', $admin_id, PDO::PARAM_INT);
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+?>
+
+    <div class="navbar bg-base-100">
+        <div class="flex lg:flex-1">
+            <a href="index.php" class="-m-1.5 p-1.5">
+                <img class="h-8 w-auto" src="img/home.png" alt="Home">
+            </a>
+            <strong>
+                <h3 style="margin-left: 10px; margin-top: 5px; font-size: 1rem;" class="fm-f">Khai Thoe</h3>
+            </strong>
+        </div>
+        <div class="flex-none gap-2">
+        <a href="admin_homepage.php" class="text-m font-semibold leading-6 text-gray-900 mx-10">จัดการรายการอสังหาริมทรัพย์</a>
+            <div class="form-control">
+              
+                <h3 class="fm-f">Admin: <?= htmlspecialchars($row['firstname'] . ' ' . $row['lastname']) ?></h3>
+            </div>
+            <div class="dropdown dropdown-end">
+                <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+                    <div class="w-10 rounded-full">
+                        <img alt="Admin Avatar" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                    </div>
+                </div>
+                <ul tabindex="0" class="z-50 menu menu-sm dropdown-content bg-base-100 rounded-box mt-3 w-52 p-2 shadow">
+                    <li><a href="logout.php">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+<?php
+} else {
+?>
+
+    <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
+        <div class="flex lg:flex-1">
+            <a href="index.php" class="-m-1.5 p-1.5">
+                <img class="h-8 w-auto" src="img/home.png" alt="Home"> 
+            </a>
+            <strong>
+                <h3 style="margin-left: 10px; margin-top: 5px; font-size: 1rem;" class="fm-f">Khai Thoe</h3>
+            </strong>
+        </div>
+        <div class="hidden lg:flex lg:gap-x-12">
+            <a href="#" class="text-m font-semibold leading-6 text-gray-900">รายการทั้งหมด</a>
+            <div class="dropdown">
+                <div tabindex="0" role="button" class="text-m font-semibold leading-6">ประเภท</div>
+                <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box w-52 p-2 shadow">
+                    <li><a>บ้านเดี่ยว</a></li>
+                    <li><a>คอนโด</a></li>
+                </ul>
+            </div>
+        </div>
+        <button class="btn btn-success mx-5" onclick="my_modal_3.showModal()">เข้าสู่ระบบ</button>
+        <dialog id="my_modal_3" class="modal">
+            <div class="modal-box">
+                <h3 class="font-bold text-center text-3xl fm-f">เข้าสู่ระบบ</h3>
+                <form method="dialog">
+                    <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                </form>
+                <form class="bg-white px-8 pt-6 pb-8 mb-4" method="post" action="signin_db.php">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="username">Username</label>
+                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" name="username" type="text" placeholder="Username" required>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Password</label>
+                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" name="password" type="password" placeholder="******************" required>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" name="signin">เข้าสู่ระบบ</button>
+                    </div>
+                </form>
+                <form method="dialog">
+                    <button class="inline-block font-bold text-sm text-blue-500 hover:text-blue-800" onclick="my_modal_2.showModal()">คุณยังไม่มีบัญชี</button>
+                </form>
+            </div>
+        </dialog>
+    </nav>
+<?php
+}
+?>
+
+
     <div class="container mx-auto my-20 ">
        
     <div class="grid grid-cols-4 grid-rows-3 grid-flow-col gap-5 mx-auto">   
@@ -109,14 +202,59 @@
     <p class="text-[1rem] fm-f my-5">ที่อยู่ : <?php echo htmlspecialchars($product['address']); ?></p>
     <p class="text-[1rem] fm-f my-5">สถานะสินค้า : <?php echo htmlspecialchars($product['status_product']); ?></p>
     </div>
-    <button class="btn  btn-neutral col-start-3 col-span-2 row-start-3 my-5 text-[1rem]"> ติดต่อซื้อสินค้า </button>
+    <?php
+    if(isset($_SESSION['admin_login'])) {
+    echo '<button class="btn  btn-neutral col-start-3 col-span-2 row-start-3 my-5 text-[1rem]"> ติดต่อซื้อสินค้า </button>';
+    }else if(isset( $_SESSION['user_login'])) {
+      echo '<button class="btn  btn-neutral col-start-3 col-span-2 row-start-3 my-5 text-[1rem]" onclick="contactadmin.showModal()"> ติดต่อซื้อสินค้า </button>';
+    }else{
+      echo '<button class="btn  btn-neutral col-start-3 col-span-2 row-start-3 my-5 text-[1rem]" onclick="login.showModal()"> ติดต่อซื้อสินค้า </button>';
+    }
+    ?>
    </div> 
 </div>
 
 
   
 
-<div class="footer">
+
+   
+<dialog id="contactadmin" class="modal">
+  <div class="modal-box">
+    <h3 class="text-lg font-bold">ติดต่อแอดมินเพื่อทำเรื่อง!</h3>
+    <img src="https://apptopi.jp/wp-content/uploads/error-qr.png" alt="contact" class="my-5">
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button>close</button>
+  </form>
+</dialog>
+
+<dialog id="login" class="modal">
+            <div class="modal-box">
+                <h3 class="font-bold text-center text-3xl fm-f">เข้าสู่ระบบ</h3>
+                <form method="dialog">
+                    <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                </form>
+                <form class="bg-white px-8 pt-6 pb-8 mb-4" method="post" action="signin_db.php">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="username">Username</label>
+                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" name="username" type="text" placeholder="Username" required>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Password</label>
+                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" name="password" type="password" placeholder="******************" required>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" name="signin">เข้าสู่ระบบ</button>
+                    </div>
+                </form>
+
+                   <a href="index.php"> <button class="inline-block font-bold text-sm text-blue-500 hover:text-blue-800" >คุณยังไม่มีบัญชี</button></a>
+         
+            </div>
+        </dialog>
+
+        <div class="footer">
   <footer class="footer footer-center bg-neutral text-primary-content p-10">
     <aside>
       <img src="img/home.png" alt="" style="width: 50px; height: 50px;">
@@ -166,6 +304,5 @@
     </nav>
   </footer>
 </div>
-   
 </body>
 </html>

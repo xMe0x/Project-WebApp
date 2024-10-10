@@ -33,6 +33,21 @@ $rows_condo = $query_condo->rowCount(); // ใช้ rowCount() แทน mysqli
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <link rel="stylesheet" href="output.css">
   <link rel="stylesheet" href="style_index.css">
+
+  <style>
+
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap; /* ทำให้การ์ดไม่เกินพื้นที่ */
+    gap: 16px; /* ระยะห่างระหว่างการ์ด */
+}
+
+.max-w-md {
+    flex: 1 1 300px; /* กำหนดขนาดขั้นต่ำของการ์ด */
+    min-height: 400px; /* หรือกำหนดความสูงขั้นต่ำ */
+}
+  </style>
 </head>
 
 <body>
@@ -47,7 +62,7 @@ $rows_condo = $query_condo->rowCount(); // ใช้ rowCount() แทน mysqli
 
   <div class="navbar bg-base-100">
     <div class="flex lg:flex-1">
-      <a href="#" class="-m-1.5 p-1.5">
+      <a href="index.php" class="-m-1.5 p-1.5">
         <img class="h-8 w-auto" src="img/home.png" alt="">
       </a>
       <strong>
@@ -86,27 +101,26 @@ $rows_condo = $query_condo->rowCount(); // ใช้ rowCount() แทน mysqli
     unset($_SESSION['error']);
   }
   ?>
-  <div class="container mx-auto">
+<div class="container mx-auto">
     <h2 class="fm-f text-2xl my-10">รายการบ้านเดี่ยว ที่อยู่ในระบบ :</h2>
-    <div class="container grid grid-cols-4 gap-8 my-10" id="product">
-
+    <div class="container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 my-10" id="product">
+    
       <?php
       if ($rows > 0) {
         while ($product = $query->fetch(PDO::FETCH_ASSOC)) {
-          // สร้าง card ที่แสดงรายละเอียดของอสังหาริมทรัพย์
+          
           echo '<div class="max-w-md w-full">';
           echo '    <div class="bg-white rounded-2xl shadow-2xl overflow-hidden hover:shadow-3xl">';
           echo '<a href="view_product_home.php?id_product=' . $product["id_product"] . '">';
           echo '     <div class="relative group">';
-          echo '        <img src="img/'.$product['product_image'].'" class="object-cover w-full aspect-square group-hover: transition duration-300 ease-in-out">';
-          echo'<div
-          class="absolute top-4 right-4 bg-gray-100 text-xs font-bold px-3 py-2 rounded-full z-20 fm-f transform rotate-12">'.htmlspecialchars($product['status_product']).'</div>';
+          echo '        <img src="img/'.$product['product_image'].'" class="object-cover w-full h-48 group-hover: transition duration-300 ease-in-out">'; 
+          echo '<div class="absolute top-4 right-4 bg-gray-100 text-xs font-bold px-3 py-2 rounded-full z-20 fm-f transform rotate-12">'.htmlspecialchars($product['status_product']).'</div>';
           echo '        <div class="hover:bg-gray-600 group-hover:translate-y-0 pb-10 transform transition duration-300 ease-in-out absolute inset-0 bg-gradient-to-br to-indigo-600 opacity-75 flex items-center justify-center">';
           echo '            <span class="text-white text-lg font-bold opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out">กดเพื่อดู</span>';
           echo '        </div>';
           echo '    </div>';
           echo '      </a>';
-          echo '        <div class="p-6">';
+          echo '        <div class="p-6 h-60">';
           echo '            <h2 class="text-3xl font-extrabold text-gray-800 mb-2">' . htmlspecialchars($product['product_name']) . '</h2>';
           echo '            <p class="text-gray-600 mb-4">' . htmlspecialchars($product['Detail']) . '</p>';
           echo '            <div class="flex items-center justify-between mb-4">';
@@ -137,6 +151,7 @@ $rows_condo = $query_condo->rowCount(); // ใช้ rowCount() แทน mysqli
       ?>
 
     </div>
+</div>
     <?php
     if (isset($_SESSION['success'])) {
       echo "<script>alert('" . $_SESSION['success'] . "');</script>";
@@ -147,56 +162,58 @@ $rows_condo = $query_condo->rowCount(); // ใช้ rowCount() แทน mysqli
       unset($_SESSION['error']);
     }
     ?>
+    <div class="container mx-auto">
     <h2 class="fm-f text-2xl my-10">รายการคอนโด ที่อยู่ในระบบ :</h2>
-    <div class="container grid grid-cols-4 gap-8 my-10" id="product">
+<div class="container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 my-10" id="product">
 
-      <?php
-      if ($rows_condo > 0) {
-        while ($product_condo = $query_condo->fetch(PDO::FETCH_ASSOC)) {
-          // สร้าง card ที่แสดงรายละเอียดของอสังหาริมทรัพย์
-          echo '<div class="max-w-md w-full">';
-          echo '    <div class="bg-white rounded-2xl shadow-2xl overflow-hidden hover:shadow-3xl">';
-          echo '<a href="view_product_condo.php?id_product=' . $product_condo["id_product"] . '">';
-          echo '     <div class="relative group">';
-          echo '        <img src="img/'.$product_condo['product_image'].'" class="object-cover w-full aspect-square group-hover: transition duration-300 ease-in-out">';
-          echo'<div
-        class="absolute top-4 right-4 bg-gray-100 text-xs font-bold px-3 py-2 rounded-full z-20 transform rotate-12 fm-f">'.htmlspecialchars($product_condo['status_product']).'</div>';
-          echo '        <div class="hover:bg-gray-600 group-hover:translate-y-0 pb-10 transform transition duration-300 ease-in-out absolute inset-0 bg-gradient-to-br to-indigo-600 opacity-75 flex items-center justify-center">';
-          echo '            <span class="text-white text-lg font-bold opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out">กดเพื่อดู</span>';
-          echo '        </div>';
-          echo '    </div>';
-          echo '      </a>';
-          echo '        <div class="p-6">';
-          echo '            <h2 class="text-3xl font-extrabold text-gray-800 mb-2">' . htmlspecialchars($product_condo['product_name']) . '</h2>';
-          echo '            <p class="text-gray-600 mb-4">' . htmlspecialchars($product_condo['Detail']) . '</p>';
-          echo '            <div class="flex items-center justify-between mb-4">';
-          echo '                <p>ราคา : </p>';
-          echo '                <span class="text-2xl font-bold text-indigo-600">' . htmlspecialchars($product_condo['price']) . '</span>';
-          echo '                <div class="flex items-center">';
-          echo '                    <p>จำนวนห้อง : </p>';
-          echo '                    <span class="ml-1 text-gray-600">' . htmlspecialchars($product_condo['bedroom']) . ' นอน ' . htmlspecialchars($product_condo['bathroom']) . ' น้ำ</span>';
-          echo '                </div>';
-          echo '            </div>';
-          echo '            <div class="grid grid-cols-2 gap-2">';
-          
-          echo '<button class="w-full bg-yellow-300 text-white font-bold py-3 px-4 rounded-lg hover:bg-yellow-500 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg open-modal-1" data-id-1="' . htmlspecialchars($product_condo['id_product']) . '">แก้ไข</button>';
-        
-          echo ' <form action="delete_product.php" method="post" onsubmit="return confirmDelete();">';
-          echo '<input type="hidden" name="type" value="' . ($product_condo['type']) . '">';
-          echo '<input type="hidden" name="id_product" value="' . ($product_condo['id_product']) . '">';
-          echo ' <button class="w-full bg-red-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-red-700 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg" type="submit" name="delete">';
-          echo '    ลบ';
-          echo ' </button>';
-          echo ' </form>';
-          echo '            </div>';
-          echo '        </div>';
-          echo '    </div>';
-          echo '</div> </div> </div>' ;
-        }
-      } else {
-        echo "<p>ไม่มีรายการอสังหาริมทรัพย์</p>";
-      }
-      ?>
+  <?php
+  if ($rows_condo > 0) {
+    while ($product_condo = $query_condo->fetch(PDO::FETCH_ASSOC)) {
+      // Create card to display property details
+      echo '<div class="max-w-md w-full">';
+      echo '    <div class="bg-white rounded-2xl shadow-2xl overflow-hidden hover:shadow-3xl">';
+      echo '<a href="view_product_condo.php?id_product=' . $product_condo["id_product"] . '">';
+      echo '     <div class="relative group">';
+      echo '        <img src="img/' . $product_condo['product_image'] . '" class="object-cover w-full h-48 group-hover:transition duration-300 ease-in-out">'; // Fixed height for images
+      echo '<div class="absolute top-4 right-4 bg-gray-100 text-xs font-bold px-3 py-2 rounded-full z-20 transform rotate-12 fm-f">' . htmlspecialchars($product_condo['status_product']) . '</div>';
+      echo '        <div class="hover:bg-gray-600 group-hover:translate-y-0 pb-10 transform transition duration-300 ease-in-out absolute inset-0 bg-gradient-to-br to-indigo-600 opacity-75 flex items-center justify-center">';
+      echo '            <span class="text-white text-lg font-bold opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out">กดเพื่อดู</span>';
+      echo '        </div>';
+      echo '    </div>';
+      echo '      </a>';
+      echo '        <div class="p-6 h-60">'; // Fixed height for card content
+      echo '            <h2 class="text-3xl font-extrabold text-gray-800 mb-2">' . htmlspecialchars($product_condo['product_name']) . '</h2>';
+      echo '            <p class="text-gray-600 mb-4">' . htmlspecialchars($product_condo['Detail']) . '</p>';
+      echo '            <div class="flex items-center justify-between mb-4">';
+      echo '                <p>ราคา : </p>';
+      echo '                <span class="text-2xl font-bold text-indigo-600">' . htmlspecialchars($product_condo['price']) . '</span>';
+      echo '                <div class="flex items-center">';
+      echo '                    <p>จำนวนห้อง : </p>';
+      echo '                    <span class="ml-1 text-gray-600">' . htmlspecialchars($product_condo['bedroom']) . ' นอน ' . htmlspecialchars($product_condo['bathroom']) . ' น้ำ</span>';
+      echo '                </div>';
+      echo '            </div>';
+      echo '            <div class="grid grid-cols-2 gap-2">';
+      
+      echo '<button class="w-full bg-yellow-300 text-white font-bold py-3 px-4 rounded-lg hover:bg-yellow-500 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg open-modal-1" data-id-1="' . htmlspecialchars($product_condo['id_product']) . '">แก้ไข</button>';
+
+      echo ' <form action="delete_product.php" method="post" onsubmit="return confirmDelete();">';
+      echo '<input type="hidden" name="type" value="' . ($product_condo['type']) . '">';
+      echo '<input type="hidden" name="id_product" value="' . ($product_condo['id_product']) . '">';
+      echo ' <button class="w-full bg-red-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-red-700 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg" type="submit" name="delete">';
+      echo '    ลบ';
+      echo ' </button>';
+      echo ' </form>';
+      echo '            </div>';
+      echo '        </div>';
+      echo '    </div>';
+      echo '</div>';
+    }
+  } else {
+    echo "<p>ไม่มีรายการอสังหาริมทรัพย์</p>";
+  }
+  ?>
+  </div>
+</div>
       <script>document.querySelectorAll('.open-modal').forEach(button => {
           button.addEventListener('click', function () {
             const productId = this.getAttribute('data-id');
