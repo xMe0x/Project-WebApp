@@ -1,29 +1,38 @@
 <?php
-    session_start();
-    if(!isset($_GET['id_product'])){
-        header("location:admin_homepage.php");
-        exit(); //ยุดการทำงานทันทีหลังจากการเปลี่ยนเส้นทาง
-    }
+session_start();
+if (!isset($_GET['id_product'])) {
+    header("location:admin_homepage.php");
+    exit();
+}
 
-    // รับค่า id_product จาก URL
-    $id_product = $_GET['id_product'];
+// รับค่า id_product จาก URL
+$id_product = $_GET['id_product'];
 
-    require_once 'config/conn.php';
+require_once 'config/conn.php';
 
-    // ดึงข้อมูลตาม id_product ที่ส่งเข้ามา
-    $query = $conn->prepare("SELECT * FROM product_list WHERE id_product = :id_product");
+// ตรวจสอบข้อมูลในตาราง product_list ก่อน
+$query = $conn->prepare("SELECT * FROM product_list WHERE id_product = :id_product");
+$query->bindParam(':id_product', $id_product, PDO::PARAM_INT);
+$query->execute();
+
+// ตรวจสอบว่าพบข้อมูลใน product_list หรือไม่
+if ($query->rowCount() > 0) {
+    $product = $query->fetch(PDO::FETCH_ASSOC);
+    $table = 'product_list'; // กำหนดตาราง
+} else {
+    // หากไม่พบใน product_list ให้ตรวจสอบใน list_product_condo แทน
+    $query = $conn->prepare("SELECT * FROM product_list_condo WHERE id_product = :id_product");
     $query->bindParam(':id_product', $id_product, PDO::PARAM_INT);
     $query->execute();
 
-    // ตรวจสอบว่ามีผลลัพธ์
     if ($query->rowCount() > 0) {
         $product = $query->fetch(PDO::FETCH_ASSOC);
+        $table = 'product_list_condo'; // กำหนดตาราง
     } else {
         echo "ไม่พบรายการอสังหาริมทรัพย์ที่มี id_product = " . htmlspecialchars($id_product);
         exit();
     }
-
-    
+}
 ?>
 
 <!DOCTYPE html>
@@ -141,7 +150,7 @@ if (isset($_SESSION['user_login'])) {
             </strong>
         </div>
         <div class="hidden lg:flex lg:gap-x-12">
-            <a href="#" class="text-m font-semibold leading-6 text-gray-900">รายการทั้งหมด</a>
+            <a href="index.php" class="text-m font-semibold leading-6 text-gray-900">รายการทั้งหมด</a>
             <div class="dropdown">
                 <div tabindex="0" role="button" class="text-m font-semibold leading-6">ประเภท</div>
                 <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box w-52 p-2 shadow">
@@ -191,11 +200,10 @@ if (isset($_SESSION['user_login'])) {
     
     <div class="col-start-3 row-start-1 col-span-2 row-span-2 mx-auto text-wrap ">
 
-    <h1 class="text-[4rem]  fm-f my-5">บ้าน : <?php echo htmlspecialchars($product['product_name']); ?></h1>
+    <h1 class="text-[4rem]  fm-f my-5">ชื่อ : <?php echo htmlspecialchars($product['product_name']); ?></h1>
     <p class="text-[1rem] fm-f my-5 text-blue-300 "> <?php echo htmlspecialchars($product['Detail']); ?></p>
-    <p></p><p class="text-[2rem]  fm-f my-5">ราคา : <?php echo htmlspecialchars($product['price']); ?> บาท</p>
-    
-    <p class="text-[1rem] fm-f my-5">ราคา : <?php echo htmlspecialchars($product['price']); ?> บาท</p>
+    <p></p><p class="text-[2rem]  fm-f my-5">ราคา : <?php echo htmlspecialchars(number_format($product['price'])); ?> บาท</p>
+    <p class="text-[1rem] fm-f my-5">ประเภท : <?php echo htmlspecialchars($product['type']); ?> </p>
     <p class="text-[1rem] fm-f my-5">จำนวนห้องนอน : <?php echo htmlspecialchars($product['bedroom']); ?> ห้อง</p>
     <p class="text-[1rem] fm-f my-5">จำนวนห้องน้ำ : <?php echo htmlspecialchars($product['bathroom']); ?> ห้อง</p>
     <p class="text-[1rem] fm-f my-5">เมือง : <?php echo htmlspecialchars($product['city']); ?></p>

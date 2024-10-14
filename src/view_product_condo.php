@@ -141,12 +141,12 @@ if (isset($_SESSION['user_login'])) {
             </strong>
         </div>
         <div class="hidden lg:flex lg:gap-x-12">
-            <a href="#" class="text-m font-semibold leading-6 text-gray-900">รายการทั้งหมด</a>
+            <a href="index.php" class="text-m font-semibold leading-6 text-gray-900">รายการทั้งหมด</a>
             <div class="dropdown">
                 <div tabindex="0" role="button" class="text-m font-semibold leading-6">ประเภท</div>
                 <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box w-52 p-2 shadow">
-                    <li><a>บ้านเดี่ยว</a></li>
-                    <li><a>คอนโด</a></li>
+                    <li><a href="list_home.php">บ้านเดี่ยว</a></li>
+                    <li><a href="list_condo.php">คอนโด</a></li>
                 </ul>
             </div>
         </div>
@@ -193,9 +193,8 @@ if (isset($_SESSION['user_login'])) {
 
     <h1 class="text-[4rem]  fm-f my-5">คอนโด : <?php echo htmlspecialchars($product['product_name']); ?></h1>
     <p class="text-[1rem] fm-f my-5 text-blue-300 "> <?php echo htmlspecialchars($product['Detail']); ?></p>
-    <p></p><p class="text-[2rem]  fm-f my-5">ราคา : <?php echo htmlspecialchars($product['price']); ?> บาท</p>
-    
-    <p class="text-[1rem] fm-f my-5">ราคา : <?php echo htmlspecialchars($product['price']); ?> บาท</p>
+    <p></p><p class="text-[2rem]  fm-f my-5">ราคา : <?php echo htmlspecialchars(number_format($product['price'])); ?> บาท</p>
+
     <p class="text-[1rem] fm-f my-5">จำนวนห้องนอน : <?php echo htmlspecialchars($product['bedroom']); ?> ห้อง</p>
     <p class="text-[1rem] fm-f my-5">จำนวนห้องน้ำ : <?php echo htmlspecialchars($product['bathroom']); ?> ห้อง</p>
     <p class="text-[1rem] fm-f my-5">เมือง : <?php echo htmlspecialchars($product['city']); ?></p>
@@ -206,7 +205,7 @@ if (isset($_SESSION['user_login'])) {
     if(isset($_SESSION['admin_login'])) {
     echo '<button class="btn  btn-neutral col-start-3 col-span-2 row-start-3 my-5 text-[1rem]"> ติดต่อซื้อสินค้า </button>';
     }else if(isset( $_SESSION['user_login'])) {
-      echo '<button class="btn  btn-neutral col-start-3 col-span-2 row-start-3 my-5 text-[1rem]" onclick="contactadmin.showModal()> ติดต่อซื้อสินค้า </button>';
+      echo '<button class="btn  btn-neutral col-start-3 col-span-2 row-start-3 my-5 text-[1rem]" onclick="contactadmin.showModal()"> ติดต่อซื้อสินค้า </button>';
     }else{
       echo '<button class="btn  btn-neutral col-start-3 col-span-2 row-start-3 my-5 text-[1rem]" onclick="login.showModal()"> ติดต่อซื้อสินค้า </button>';
     }
@@ -270,8 +269,8 @@ if (isset($_SESSION['user_login'])) {
    
 <dialog id="contactadmin" class="modal">
   <div class="modal-box">
-    <h3 class="text-lg font-bold">Hello!</h3>
-    <p class="py-4">Press ESC key or click outside to close</p>
+    <h3 class="text-lg font-bold">ติดต่อแอดมินเพื่อทำเรื่อง!</h3>
+    <img src="https://apptopi.jp/wp-content/uploads/error-qr.png" alt="contact" class="my-5">
   </div>
   <form method="dialog" class="modal-backdrop">
     <button>close</button>
