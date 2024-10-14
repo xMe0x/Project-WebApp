@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 09, 2024 at 10:38 AM
+-- Generation Time: Oct 14, 2024 at 04:42 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -47,8 +47,10 @@ CREATE TABLE `product_list` (
 --
 
 INSERT INTO `product_list` (`id_product`, `product_name`, `price`, `product_image`, `Detail`, `city`, `status_product`, `date_listed`, `address`, `bedroom`, `bathroom`, `type`) VALUES
-(1001, 'บ้านเดี่ยว', 0, '', 'บ้านเดี่ยว', 'บ้านเดี่ยว', 'ยังไม่ขาย', '0000-00-00', '40/02344', 0, 0, 'บ้านเดี่ยว'),
-(1011, 'บ้านไม่ไทย', 150, '', 'บ้านนี้มีผีเหมือนบ้านสอง', 'phatumthani', 'ยังไม่ขาย', '0000-00-00', '44/7845', 5, 3, 'บ้านเดี่ยว');
+(1000, 'บ้านเงิน', 50000, 'homerecom.jpg', 'บ้านใหญ่ใจกลางกรุงเทพ มีห้องนอนและห้องน้ำที่หลากหลาย', 'กรุงเทพ', 'ยังไม่ขาย', '2024-10-07', '40/02344', 5, 2, 'บ้านเดี่ยว'),
+(1019, 'บ้านโดมทอง', 14529000, 'S__425148445_0-800x600.jpg', 'บ้านวิวดีมีป่าไม้ ทำให้รู้สึกเป็นหนึ่งเดียวกับธรรมชาติ', 'บึงกาฬ', 'ยังไม่ขาย', '2024-10-08', '40/02344', 1, 1, 'บ้านเดี่ยว'),
+(1020, 'บ้านแสน', 1990000, 'home-garden-terrace-head.jpg', 'บ้านนี้อยู่ใกล้มหาวิทยาลัยเทคโนโลยีราชมงคลธัญบุรี', 'ปทุมธานี', 'ยังไม่ขาย', '2024-09-30', '4561/454', 2, 1, 'บ้านเดี่ยว'),
+(1021, 'บ้านนาทอง', 1590000, 'f889ca62-306e-43fd-a703-0b9ddb51dca4.jpg', 'บ้านนี้อยู่ใกล้มหาวิทยาลัยเทคโนโลยีราชมงคลธัญบุรี', 'ปทุมธานี', 'ยังไม่ขาย', '2024-10-07', '4561/454', 2, 1, 'บ้านเดี่ยว');
 
 -- --------------------------------------------------------
 
@@ -76,8 +78,10 @@ CREATE TABLE `product_list_condo` (
 --
 
 INSERT INTO `product_list_condo` (`id_product`, `product_name`, `price`, `product_image`, `Detail`, `city`, `status_product`, `date_listed`, `address`, `bedroom`, `bathroom`, `type`) VALUES
-(2, 'บ้านให้v3', 5555.00, '', 'บ้านให้v3', '11', 'ขายแล้ว', '2024-10-08', 'บ้านให้v3', 1, 1, 'คอนโด'),
-(3, 'บ้านเดี่ยว', 0.00, '', 'บ้านเดี่ยว', 'บ้านเดี่ยว', 'ยังไม่ขาย', '0000-00-00', '40/02344', 0, 0, 'คอนโด');
+(100, 'คอนโด', 5555.00, 'R (1).jfif', 'บ้านนี้มีผีเหมือนบ้านแรก', 'phatumthani', 'ยังไม่ขาย', '2024-10-07', '40/02344', 5, 2, 'คอนโด'),
+(1021, 'คอนโดแสนใจ', 185411.00, 'R.jfif', 'คอนโดมีส่วนกลางที่ดีมีสระว่ายน้ำพร้อมให้จับจอง', 'ปทุมธานี', 'ยังไม่ขาย', '2024-10-08', 'รังสิต นครนายก 40/5451 ', 1, 1, 'คอนโด'),
+(1023, 'Parason', 1200000.00, 'COBE-Ratchada-Rama-9-2.jpg', 'คอนโดเปิดใหม่ใกล้BTS ', 'กรุงเทพ', 'ยังไม่ขาย', '2024-10-06', '24/7', 2, 1, 'คอนโด'),
+(1024, 'Origin', 599999.00, 'Origin-Plug-Play-Srinakarin-1.jpg', 'คอนโดวิวดี ในภาคเหนือ ', 'เชียงใหม่', 'ยังไม่ขาย', '2024-10-08', '53/47', 2, 1, 'คอนโด');
 
 -- --------------------------------------------------------
 
@@ -102,7 +106,9 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `firstname`, `lastname`, `username`, `email`, `password`, `urole`, `time_created`) VALUES
 (1, 'คณากร', 'เผยสกุล', 'meoza3x', 'markzanazer4@gmail.com', '$2y$10$8CX2E.YPoj6B/jn9bLcEju0JzfUOZpcHR9aXnohKzfidRyHZMDkNu', 'user', '2024-10-07 14:26:15'),
-(2, 'คณากร', 'เผยสกุล', 'meoza5x', 'markzanazer5@gmail.com', '$2y$10$jabXj8lTyUjUYV2w6gGuEu6otiQ0P9BamDdQw9S0VChhoG.tzZSfa', 'admin', '2024-10-08 13:20:04');
+(2, 'คณากร', 'เผยสกุล', 'meoza5x', 'markzanazer5@gmail.com', '$2y$10$jabXj8lTyUjUYV2w6gGuEu6otiQ0P9BamDdQw9S0VChhoG.tzZSfa', 'admin', '2024-10-08 13:20:04'),
+(445, 'Kanakron', 'Phaesakun', 'adminmark', 'kanakronza@gmail.com', '$2y$10$ThzEnLV61rSK3Po/2bidneYywP9eMyJytr7ibMDeWp237u71OwykC', 'user', '2024-10-10 16:25:23'),
+(446, 'ทดสอบ', 'ระบบ', 'test_id', 'ddsdsds@aggg.com', '$2y$10$5B6tH2KWFgglEO1/k84Kg.5VvfY/On.XpLSpD.kiUSRZ/gCF5gnkO', 'user', '2024-10-11 09:05:25');
 
 --
 -- Indexes for dumped tables
@@ -134,19 +140,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `product_list`
 --
 ALTER TABLE `product_list`
-  MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1012;
+  MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1023;
 
 --
 -- AUTO_INCREMENT for table `product_list_condo`
 --
 ALTER TABLE `product_list_condo`
-  MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1011;
+  MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1025;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=445;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=448;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
