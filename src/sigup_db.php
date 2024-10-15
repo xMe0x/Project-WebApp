@@ -3,6 +3,7 @@ session_start();
 require_once 'config/conn.php';
 
 if(isset($_POST['signup'])){
+    if(!empty(trim($_POST['firstname'])) && !empty(trim($_POST['lastname'])) && !empty(trim($_POST['username'])) && !empty(trim($_POST['password']))){
     $firstname = $_POST['firstname'];
     $lastname = $_POST['lastname'];
     $username = $_POST['username'];
@@ -52,5 +53,10 @@ if(isset($_POST['signup'])){
             header("location:index.php");
         }
     }
+    }else{
+        $_SESSION['error'] = 'กรุณากรอกข้อมูลให้ครบถ้วน';
+        header("location:index.php");
+        exit();
+}
 }
 ?>
